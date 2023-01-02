@@ -19,3 +19,10 @@ services:
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.josep.co`)"
       - "traefik.enable=true"
+    networks:
+      - lb_net
+
+networks:
+  lb_net:
+    name: lb_net
+    external: false

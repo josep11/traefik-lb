@@ -52,7 +52,14 @@ Having a project with name: `my-flask-app` that is served through port 5000.
 127.0.0.1 my-flask-app.josep.co
 ```
 
-### Add Traefik Labels from other projects ###
+## Importing and connecting from the other projects ##
+
+Example of docker-compose. Pay attention especially to the following sections:
+
+* `lb_net` network so that they are in the same local network.
+* Traefik labels to make the service discoverable by Traefik and add the configuration.
+
+### Example of docker-compose ###
 
 ```yml
 version: "3.9"
@@ -70,6 +77,12 @@ services:
       - "traefik.http.routers.my-flask-app.rule=Host(`my-flask-app.josep.co`)"
       - "traefik.http.routers.my-flask-app.service=my-flask-app"
       - "traefik.http.services.my-flask-app.loadbalancer.server.port=5000"
+    networks:
+      - lb_net
+
+networks:
+  lb_net:
+    external: true
 ```
 
 Now you can access [https://my-flask-app.josep.co](https://my-flask-app.josep.co)
