@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  josep-lb:
+    restart: always
+    image: traefik:2.9
+    container_name: josep-lb
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./docker/traefik/certificates:/certs:ro
+      - ./docker/traefik/config/traefik.yaml:/traefik.yaml:ro
+    command:
+      - "--configFile=/traefik.yaml"
+    ports:
+      - "80:80"
+      - "443:443"
+    labels:
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.josep.co`)"
+      - "traefik.enable=true"

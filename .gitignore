@@ -1,0 +1,7 @@
+.idea
+.vscode
+
+docker-compose.override.yaml
+
+docker/traefik/certificates/*
+!docker/traefik/certificates/.gitkeep
