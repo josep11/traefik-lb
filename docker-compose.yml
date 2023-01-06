@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   josep-lb:
-    restart: always
+    # restart: always
     image: traefik:2.9
     container_name: josep-lb
     volumes:
